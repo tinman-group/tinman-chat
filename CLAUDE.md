@@ -80,9 +80,35 @@ Special documents that can be created and edited:
 - Rate limiting by user type (registered vs guest)
 - Resumable streams require Redis configuration
 
+## Code Style Guidelines
+
+When generating or modifying code, follow these formatting conventions that match the project's Prettier and ESLint configuration:
+
+### Formatting Rules
+- **Quotes**: Use double quotes (`"`) not single quotes (`'`)
+- **Semicolons**: Always include semicolons at the end of statements
+- **Trailing Commas**: Do not use trailing commas
+- **Indentation**: Use 2 spaces for indentation, no tabs
+- **Line Length**: Maximum 80 characters per line
+- **Line Endings**: Use LF (`\n`) line endings
+- **Prose Wrap**: Always wrap prose text
+
+### TypeScript/ESLint Rules
+- **Explicit Any**: `any` type is allowed when necessary
+- **Unused Variables**: Unused variables are permitted
+- **Empty Object Types**: Empty object types (`{}`) are allowed
+- **Error Suppression**: Use `@ts-expect-error` instead of `@ts-ignore` for TypeScript error suppression
+
+### Code Conventions
+- Use modern ECMAScript features (ES2022+)
+- Prefer ES modules (`import`/`export`) syntax
+- Follow React and Next.js best practices
+- Use Tailwind CSS classes in the order specified by the prettier-plugin-tailwindcss
+
 ## Testing
 
 - Playwright for e2e testing
 - Test command: `pnpm test`
 - Tests include chat functionality, artifacts, reasoning, and session management
 - Mock AI providers used in test environment
+- use @ts-expect-error instead of @ts-ignore

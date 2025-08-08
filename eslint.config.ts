@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import importPlugin from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+// @ts-expect-error - No types available for @next/eslint-plugin-next
 import nextPlugin from "@next/eslint-plugin-next";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
