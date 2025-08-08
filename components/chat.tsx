@@ -31,7 +31,8 @@ export function Chat({
   initialVisibilityType,
   isReadonly,
   session,
-  autoResume
+  autoResume,
+  title
 }: {
   id: string;
   initialMessages: ChatMessage[];
@@ -40,6 +41,7 @@ export function Chat({
   isReadonly: boolean;
   session: Session;
   autoResume: boolean;
+  title?: string;
 }) {
   const { visibilityType } = useChatVisibility({
     chatId: id,
@@ -135,6 +137,7 @@ export function Chat({
         selectedVisibilityType={initialVisibilityType}
         isReadonly={isReadonly}
         session={session}
+        title={title}
       />
       <Main.Body>
         <Messages

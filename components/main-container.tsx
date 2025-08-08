@@ -1,6 +1,5 @@
 import { FC, HTMLProps, PropsWithChildren } from "react";
-import { Separator } from "./ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "./ui/sidebar";
+import { SidebarInset, SidebarProvider } from "./ui/sidebar";
 
 export namespace Main {
   export const Root = ({ children }: PropsWithChildren) => {
@@ -25,12 +24,12 @@ export namespace Main {
       className="border-sidebar-border flex h-[48px] items-center gap-2 border-b px-2"
       {...props}
     >
-      <SidebarTrigger />
+      {/* <SidebarTrigger />
       <Separator
         orientation="vertical"
         decorative
         className="data-[orientation=vertical]:h-[32px]"
-      />
+      /> */}
       {children}
     </header>
   );

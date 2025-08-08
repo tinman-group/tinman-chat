@@ -15,13 +15,15 @@ function PureChatHeader({
   selectedModelId,
   selectedVisibilityType,
   isReadonly,
-  session
+  session,
+  title
 }: {
   chatId: string;
   selectedModelId: string;
   selectedVisibilityType: VisibilityType;
   isReadonly: boolean;
   session: Session;
+  title?: string;
 }) {
   const router = useRouter();
   const { open } = useSidebar();
@@ -30,6 +32,7 @@ function PureChatHeader({
 
   return (
     <Main.Header>
+      {title && <h2>{title}</h2>}
       <span className="flex-1" />
       {!isReadonly && (
         <ModelSelector

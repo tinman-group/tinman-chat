@@ -3,11 +3,13 @@
 import { useResizable } from "@/hooks/use-resizable";
 import { cx } from "class-variance-authority";
 import { ComponentProps, PropsWithChildren } from "react";
+import { Button } from "./ui/button";
 import {
   Sidebar as BaseSidebar,
   SidebarFooter as BaseSidebarFooter,
   SidebarHeader as BaseSidebarHeader
 } from "./ui/sidebar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function MainSidebar({
   children,
@@ -75,4 +77,30 @@ export namespace MainSidebar {
       {children}
     </BaseSidebarFooter>
   );
+
+  export const Action = ({
+    label,
+    onClick,
+    icon
+  }: {
+    label?: string;
+    onClick?: (ev: any) => void;
+    icon?: React.ReactNode;
+  }) => {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            type="button"
+            className="h-fit p-2"
+            onClick={onClick}
+          >
+            {icon}
+          </Button>
+        </TooltipTrigger>
+        {label && <TooltipContent align="end">{label}</TooltipContent>}
+      </Tooltip>
+    );
+  };
 }
