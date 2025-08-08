@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import { startTransition, useMemo, useOptimistic, useState } from 'react';
+import { startTransition, useMemo, useOptimistic, useState } from "react";
 
-import { saveChatModelAsCookie } from '@/app/(app)/actions';
-import { Button } from '@/components/ui/button';
+import { saveChatModelAsCookie } from "@/app/(app)/actions";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { chatModels } from '@/lib/ai/models';
-import { cn } from '@/lib/utils';
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { chatModels } from "@/lib/ai/models";
+import { cn } from "@/lib/utils";
 
-import { CheckCircleFillIcon, ChevronDownIcon } from './icons';
-import { entitlementsByUserType } from '@/lib/ai/entitlements';
-import type { Session } from 'next-auth';
+import { entitlementsByUserType } from "@/lib/ai/entitlements";
+import type { Session } from "next-auth";
+import { CheckCircleFillIcon, ChevronDownIcon } from "./icons";
 
 export function ModelSelector({
   session,
   selectedModelId,
-  className,
+  className
 }: {
   session: Session;
   selectedModelId: string;
@@ -33,15 +33,15 @@ export function ModelSelector({
   const { availableChatModelIds } = entitlementsByUserType[userType];
 
   const availableChatModels = chatModels.filter((chatModel) =>
-    availableChatModelIds.includes(chatModel.id),
+    availableChatModelIds.includes(chatModel.id)
   );
 
   const selectedChatModel = useMemo(
     () =>
       availableChatModels.find(
-        (chatModel) => chatModel.id === optimisticModelId,
+        (chatModel) => chatModel.id === optimisticModelId
       ),
-    [optimisticModelId, availableChatModels],
+    [optimisticModelId, availableChatModels]
   );
 
   return (
@@ -49,15 +49,11 @@ export function ModelSelector({
       <DropdownMenuTrigger
         asChild
         className={cn(
-          'w-fit data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
-          className,
+          "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+          className
         )}
       >
-        <Button
-          data-testid="model-selector"
-          variant="outline"
-          className="md:px-2 md:h-[34px]"
-        >
+        <Button data-testid="model-selector" variant="ghost">
           {selectedChatModel?.name}
           <ChevronDownIcon />
         </Button>
@@ -83,11 +79,11 @@ export function ModelSelector({
             >
               <button
                 type="button"
-                className="gap-4 group/item flex flex-row justify-between items-center w-full"
+                className="group/item flex w-full flex-row items-center justify-between gap-4"
               >
-                <div className="flex flex-col gap-1 items-start">
+                <div className="flex flex-col items-start gap-1">
                   <div>{chatModel.name}</div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-muted-foreground text-xs">
                     {chatModel.description}
                   </div>
                 </div>

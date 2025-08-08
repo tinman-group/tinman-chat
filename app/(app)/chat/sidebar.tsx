@@ -3,7 +3,6 @@
 import { PlusIcon } from "@/components/icons";
 import { MainSidebar } from "@/components/main-sidebar";
 import { SidebarHistory } from "@/components/sidebar-history";
-import { SidebarUserNav } from "@/components/sidebar-user-nav";
 import { Button } from "@/components/ui/button";
 import { SidebarContent, useSidebar } from "@/components/ui/sidebar";
 import {
@@ -42,9 +41,7 @@ export function ChatSidebar({ user }: { user: User | undefined }) {
       <SidebarContent>
         <SidebarHistory user={user} />
       </SidebarContent>
-      <MainSidebar.Footer>
-        {user && <SidebarUserNav user={user} />}
-      </MainSidebar.Footer>
+      <MainSidebar.Footer></MainSidebar.Footer>
     </MainSidebar>
   );
 }

@@ -17,6 +17,7 @@ import useSWR, { useSWRConfig } from "swr";
 import { unstable_serialize } from "swr/infinite";
 import { Artifact } from "./artifact";
 import { useDataStream } from "./data-stream-provider";
+import { Main } from "./main-container";
 import { Messages } from "./messages";
 import { MultimodalInput } from "./multimodal-input";
 import { getChatHistoryPaginationKey } from "./sidebar-history";
@@ -127,16 +128,15 @@ export function Chat({
   });
 
   return (
-    <>
-      <div className="bg-background flex h-dvh min-w-0 flex-col">
-        <ChatHeader
-          chatId={id}
-          selectedModelId={initialChatModel}
-          selectedVisibilityType={initialVisibilityType}
-          isReadonly={isReadonly}
-          session={session}
-        />
-
+    <Main.Content>
+      <ChatHeader
+        chatId={id}
+        selectedModelId={initialChatModel}
+        selectedVisibilityType={initialVisibilityType}
+        isReadonly={isReadonly}
+        session={session}
+      />
+      <Main.Body>
         <Messages
           chatId={id}
           status={status}
@@ -165,7 +165,7 @@ export function Chat({
             />
           )}
         </form>
-      </div>
+      </Main.Body>
 
       <Artifact
         chatId={id}
@@ -183,6 +183,6 @@ export function Chat({
         isReadonly={isReadonly}
         selectedVisibilityType={visibilityType}
       />
-    </>
+    </Main.Content>
   );
 }

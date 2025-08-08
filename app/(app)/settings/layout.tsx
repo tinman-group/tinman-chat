@@ -11,7 +11,7 @@ export default async function Layout({ children }: PropsWithChildren) {
   return (
     <Main.Root>
       <SettingsSidebar user={session?.user} />
-      <Main.Content>{children}</Main.Content>
+      {children}
     </Main.Root>
   );
 }

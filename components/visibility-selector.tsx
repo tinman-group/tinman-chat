@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { type ReactNode, useMemo, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { useChatVisibility } from "@/hooks/use-chat-visibility";
+import { cn } from "@/lib/utils";
+import { type ReactNode, useMemo, useState } from "react";
 import {
   CheckCircleFillIcon,
   ChevronDownIcon,
   GlobeIcon,
-  LockIcon,
-} from './icons';
-import { useChatVisibility } from '@/hooks/use-chat-visibility';
+  LockIcon
+} from "./icons";
 
-export type VisibilityType = 'private' | 'public';
+export type VisibilityType = "private" | "public";
 
 const visibilities: Array<{
   id: VisibilityType;
@@ -26,23 +26,23 @@ const visibilities: Array<{
   icon: ReactNode;
 }> = [
   {
-    id: 'private',
-    label: 'Private',
-    description: 'Only you can access this chat',
-    icon: <LockIcon />,
+    id: "private",
+    label: "Private",
+    description: "Only you can access this chat",
+    icon: <LockIcon />
   },
   {
-    id: 'public',
-    label: 'Public',
-    description: 'Anyone with the link can access this chat',
-    icon: <GlobeIcon />,
-  },
+    id: "public",
+    label: "Public",
+    description: "Anyone with the link can access this chat",
+    icon: <GlobeIcon />
+  }
 ];
 
 export function VisibilitySelector({
   chatId,
   className,
-  selectedVisibilityType,
+  selectedVisibilityType
 }: {
   chatId: string;
   selectedVisibilityType: VisibilityType;
@@ -51,12 +51,12 @@ export function VisibilitySelector({
 
   const { visibilityType, setVisibilityType } = useChatVisibility({
     chatId,
-    initialVisibilityType: selectedVisibilityType,
+    initialVisibilityType: selectedVisibilityType
   });
 
   const selectedVisibility = useMemo(
     () => visibilities.find((visibility) => visibility.id === visibilityType),
-    [visibilityType],
+    [visibilityType]
   );
 
   return (
@@ -64,17 +64,12 @@ export function VisibilitySelector({
       <DropdownMenuTrigger
         asChild
         className={cn(
-          'w-fit data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
-          className,
+          "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground w-fit",
+          className
         )}
       >
-        <Button
-          data-testid="visibility-selector"
-          variant="outline"
-          className="hidden md:flex md:px-2 md:h-[34px]"
-        >
-          {selectedVisibility?.icon}
-          {selectedVisibility?.label}
+        <Button data-testid="visibility-selector" variant="ghost">
+          {selectedVisibility?.icon ?? selectedVisibility?.label}
           <ChevronDownIcon />
         </Button>
       </DropdownMenuTrigger>
@@ -88,13 +83,13 @@ export function VisibilitySelector({
               setVisibilityType(visibility.id);
               setOpen(false);
             }}
-            className="gap-4 group/item flex flex-row justify-between items-center"
+            className="group/item flex flex-row items-center justify-between gap-4"
             data-active={visibility.id === visibilityType}
           >
-            <div className="flex flex-col gap-1 items-start">
+            <div className="flex flex-col items-start gap-1">
               {visibility.label}
               {visibility.description && (
-                <div className="text-xs text-muted-foreground">
+                <div className="text-muted-foreground text-xs">
                   {visibility.description}
                 </div>
               )}

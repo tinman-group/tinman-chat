@@ -1,5 +1,5 @@
 import { NavSidebar } from "@/components/nav-sidebar";
-import { FolderOpen, HelpCircle, MessagesSquare, Settings } from "lucide-react";
+import { Bot, HelpCircle, MessagesSquare, Settings } from "lucide-react";
 import Script from "next/script";
 import { PropsWithChildren } from "react";
 
@@ -17,7 +17,7 @@ export default async function Layout({ children }: PropsWithChildren) {
         <NavSidebar
           items={[
             { to: "/chat", icon: <MessagesSquare /> },
-            { to: "/agents", icon: <FolderOpen /> }
+            { to: "/agents", icon: <Bot /> }
           ]}
           footer={[
             { to: "/settings", icon: <Settings /> },

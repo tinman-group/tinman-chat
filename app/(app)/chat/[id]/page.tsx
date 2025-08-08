@@ -1,12 +1,13 @@
-import { cookies } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 
-import { auth } from '@/app/(auth)/auth';
-import { Chat } from '@/components/chat';
-import { getChatById, getMessagesByChatId } from '@/lib/db/queries';
-import { DataStreamHandler } from '@/components/data-stream-handler';
-import { DEFAULT_CHAT_MODEL } from '@/lib/ai/models';
-import { convertToUIMessages } from '@/lib/utils';
+import { auth } from "@/app/(auth)/auth";
+import { Chat } from "@/components/chat";
+import { DataStreamHandler } from "@/components/data-stream-handler";
+import { Main } from "@/components/main-container";
+import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
+import { getChatById, getMessagesByChatId } from "@/lib/db/queries";
+import { convertToUIMessages } from "@/lib/utils";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -20,10 +21,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const session = await auth();
 
   if (!session) {
-    redirect('/api/auth/guest');
+    redirect("/api/auth/guest");
   }
 
-  if (chat.visibility === 'private') {
+  if (chat.visibility === "private") {
     if (!session.user) {
       return notFound();
     }
@@ -34,13 +35,13 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   }
 
   const messagesFromDb = await getMessagesByChatId({
-    id,
+    id
   });
 
   const uiMessages = convertToUIMessages(messagesFromDb);
 
   const cookieStore = await cookies();
-  const chatModelFromCookie = cookieStore.get('chat-model');
+  const chatModelFromCookie = cookieStore.get("chat-model");
 
   if (!chatModelFromCookie) {
     return (
@@ -60,7 +61,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   }
 
   return (
-    <>
+    <Main.Content>
       <Chat
         id={chat.id}
         initialMessages={uiMessages}
@@ -71,6 +72,6 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         autoResume={true}
       />
       <DataStreamHandler />
-    </>
+    </Main.Content>
   );
 }

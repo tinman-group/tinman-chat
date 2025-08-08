@@ -1,7 +1,11 @@
 "use client";
 
 import { MainSidebar } from "@/components/main-sidebar";
-import { Button } from "@/components/ui/button";
+import { 
+  SidebarContent, 
+  SidebarGroup, 
+  SidebarMenu 
+} from "@/components/ui/sidebar";
 import {
   Bell,
   Database,
@@ -13,75 +17,74 @@ import {
   User
 } from "lucide-react";
 import type { User as NextAuthUser } from "next-auth";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface SettingsSidebarProps {
   user?: NextAuthUser;
 }
 
-const SettingsNavItem = ({
-  icon: Icon,
-  label,
-  isActive = false
-}: {
-  icon: any;
-  label: string;
-  isActive?: boolean;
-}) => (
-  <Button
-    variant="ghost"
-    className={`h-9 w-full justify-start px-3 ${
-      isActive
-        ? "bg-sidebar-accent text-sidebar-accent-foreground"
-        : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
-    }`}
-  >
-    <Icon className="mr-3 h-4 w-4" />
-    {label}
-  </Button>
-);
-
 export function SettingsSidebar({ user }: SettingsSidebarProps) {
+  const pathname = usePathname();
+
+  const settingsGroups = [
+    {
+      label: "General",
+      items: [
+        { icon: User, label: "Profile", href: "/settings/profile" },
+        { icon: Settings, label: "Preferences", href: "/settings/preferences" },
+        { icon: Palette, label: "Appearance", href: "/settings/appearance" },
+        { icon: Bell, label: "Notifications", href: "/settings/notifications" }
+      ]
+    },
+    {
+      label: "AI & Chat",
+      items: [
+        { icon: Settings, label: "Model Settings", href: "/settings/models" },
+        { icon: Database, label: "Chat History", href: "/settings/history" }
+      ]
+    },
+    {
+      label: "Security", 
+      items: [
+        { icon: Key, label: "Authentication", href: "/settings/auth" },
+        { icon: Shield, label: "Privacy", href: "/settings/privacy" }
+      ]
+    },
+    {
+      label: "Support",
+      items: [
+        { icon: HelpCircle, label: "Help & Docs", href: "/settings/help" }
+      ]
+    }
+  ];
+
   return (
     <MainSidebar>
-      <MainSidebar.Header title="Settings"></MainSidebar.Header>
-
-      <div className="flex-1 p-2">
-        <nav className="space-y-1">
-          <div className="pb-2">
-            <p className="text-sidebar-foreground/60 px-3 pb-2 text-xs font-medium">
-              GENERAL
-            </p>
-            <SettingsNavItem icon={User} label="Profile" isActive />
-            <SettingsNavItem icon={Settings} label="Preferences" />
-            <SettingsNavItem icon={Palette} label="Appearance" />
-            <SettingsNavItem icon={Bell} label="Notifications" />
-          </div>
-
-          <div className="pb-2">
-            <p className="text-sidebar-foreground/60 px-3 pb-2 text-xs font-medium">
-              AI & CHAT
-            </p>
-            <SettingsNavItem icon={Settings} label="Model Settings" />
-            <SettingsNavItem icon={Database} label="Chat History" />
-          </div>
-
-          <div className="pb-2">
-            <p className="text-sidebar-foreground/60 px-3 pb-2 text-xs font-medium">
-              SECURITY
-            </p>
-            <SettingsNavItem icon={Key} label="Authentication" />
-            <SettingsNavItem icon={Shield} label="Privacy" />
-          </div>
-
-          <div className="pb-2">
-            <p className="text-sidebar-foreground/60 px-3 pb-2 text-xs font-medium">
-              SUPPORT
-            </p>
-            <SettingsNavItem icon={HelpCircle} label="Help & Docs" />
-          </div>
-        </nav>
-      </div>
-
+      <MainSidebar.Header title="Settings" />
+      <SidebarContent>
+        {settingsGroups.map((group) => (
+          <SidebarGroup key={group.label}>
+            <SidebarGroup.Label>{group.label}</SidebarGroup.Label>
+            <SidebarMenu>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+                return (
+                  <SidebarMenu.Item key={item.href}>
+                    <SidebarMenu.Button asChild isActive={isActive}>
+                      <Link href={item.href}>
+                        <Icon />
+                        <span>{item.label}</span>
+                      </Link>
+                    </SidebarMenu.Button>
+                  </SidebarMenu.Item>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
       <MainSidebar.Footer>
         <div className="flex items-center gap-2 px-2">
           <div className="bg-sidebar-accent flex h-8 w-8 items-center justify-center rounded-md">

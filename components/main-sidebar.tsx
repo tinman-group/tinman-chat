@@ -62,7 +62,7 @@ export namespace MainSidebar {
     <BaseSidebarHeader className="border-sidebar-border flex h-[48px] flex-row items-center border-b px-3">
       {title && (
         <>
-          <h2 className="text-[13px] font-normal">{title}</h2>
+          <h2 className="font-medium">{title}</h2>
           <span className="flex-auto">&nbsp;</span>
         </>
       )}

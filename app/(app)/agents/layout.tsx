@@ -1,8 +1,7 @@
 import { auth } from "@/app/(auth)/auth";
-import { DataStreamProvider } from "@/components/data-stream-provider";
 import { Main } from "@/components/main-container";
 import { PropsWithChildren } from "react";
-import { ChatSidebar } from "./sidebar";
+import { AgentsSidebar } from "./sidebar";
 
 export const experimental_ppr = true;
 
@@ -11,10 +10,8 @@ export default async function Layout({ children }: PropsWithChildren) {
 
   return (
     <Main.Root>
-      <DataStreamProvider>
-        <ChatSidebar user={session?.user} />
-        {children}
-      </DataStreamProvider>
+      <AgentsSidebar user={session?.user} />
+      {children}
     </Main.Root>
   );
 }

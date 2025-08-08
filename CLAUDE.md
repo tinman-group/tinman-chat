@@ -91,13 +91,14 @@ ORM. The architecture follows a modern full-stack pattern with:
 
 ### Key Directories
 
-- **`app/(app)/`**: Main application shell with nested apps (chat, settings, help)
+- **`app/(app)/`**: Main application shell with nested apps (chat, settings, agents)
 
   - Each child route is a separate nested app with its own layout using Main
 
     container
 
-  - Navigation handled by app shell layout with automatic active state
+  - Navigation handled by app shell layout using NavSidebar component
+  - Each nested app has its own sidebar component using MainSidebar
 - **`app/(auth)/`**: Authentication pages and logic
 - **`artifacts/`**: Artifact handling for code, text, images, and sheets
 - **`components/`**: React components including UI primitives from shadcn/ui
