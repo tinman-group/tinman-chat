@@ -164,3 +164,77 @@ Development Commands
 - **Database studio**: `pnpm db:studio` - Opens Drizzle Kit database studio
 - **Push schema**: `pnpm db:push` - Push schema changes directly to database
 - **Pull schema**: `pnpm db:pull` - Pull current database schema
+
+## Available Specialized Agents
+
+The following specialized agents are available for this project:
+
+### Development & Architecture
+
+- **backend-architect** - Design RESTful APIs, microservice boundaries, and database schemas
+- **frontend-developer** - Build React components, implement responsive layouts, and handle client-side state management
+- **ui-ux-designer** - Create interface designs, wireframes, and design systems
+- **graphql-architect** - Design GraphQL schemas, resolvers, and federation
+- **architect-reviewer** - Reviews code changes for architectural consistency and patterns
+
+### Language Specialists
+
+- **python-pro** - Write idiomatic Python code with advanced features and optimizations
+- **javascript-pro** - Master modern JavaScript with ES6+, async patterns, and Node.js APIs
+- **typescript-pro** - Master TypeScript with advanced types, generics, and strict type safety
+- **sql-pro** - Write complex SQL queries, optimize execution plans, and design normalized schemas
+
+### Infrastructure & Operations
+
+- **devops-troubleshooter** - Debug production issues, analyze logs, and fix deployment failures
+- **deployment-engineer** - Configure CI/CD pipelines, Docker containers, and cloud deployments
+- **cloud-architect** - Design AWS/Azure/GCP infrastructure and optimize cloud costs
+- **database-optimizer** - Optimize SQL queries, design efficient indexes, and handle database migrations
+- **database-admin** - Manage database operations, backups, replication, and monitoring
+- **incident-responder** - Handles production incidents with urgency and precision
+- **network-engineer** - Debug network connectivity, configure load balancers, and analyze traffic patterns
+- **dx-optimizer** - Developer Experience specialist that improves tooling, setup, and workflows
+
+### Quality & Security
+
+- **code-reviewer** - Expert code review with deep configuration security focus and production reliability
+- **security-auditor** - Review code for vulnerabilities and ensure OWASP compliance
+- **test-automator** - Create comprehensive test suites with unit, integration, and e2e tests
+- **performance-engineer** - Profile applications, optimize bottlenecks, and implement caching strategies
+- **debugger** - Debugging specialist for errors, test failures, and unexpected behavior
+- **error-detective** - Search logs and codebases for error patterns, stack traces, and anomalies
+- **search-specialist** - Expert web researcher using advanced search techniques and synthesis
+
+### Data & AI
+
+- **data-scientist** - Data analysis expert for SQL queries, BigQuery operations, and data insights
+- **data-engineer** - Build ETL pipelines, data warehouses, and streaming architectures
+- **ai-engineer** - Build LLM applications, RAG systems, and prompt pipelines
+- **ml-engineer** - Implement ML pipelines, model serving, and feature engineering
+- **mlops-engineer** - Build ML pipelines, experiment tracking, and model registries
+- **prompt-engineer** - Optimizes prompts for LLMs and AI systems
+
+### Specialized Domains
+
+- **api-documenter** - Create OpenAPI/Swagger specs and write developer documentation
+- **payment-integration** - Integrate Stripe, PayPal, and payment processors
+- **legacy-modernizer** - Refactor legacy codebases and implement gradual modernization
+- **context-manager** - Manages context across multiple agents and long-running tasks
+
+### Business & Marketing
+
+- **business-analyst** - Analyze metrics, create reports, and track KPIs
+- **content-marketer** - Write blog posts, social media content, and email newsletters
+- **sales-automator** - Draft cold emails, follow-ups, and proposal templates
+- **customer-support** - Handle support tickets, FAQ responses, and customer emails
+- **legal-advisor** - Draft privacy policies, terms of service, disclaimers, and legal notices
+
+## MCP Services
+
+The following Model Context Protocol (MCP) services are configured:
+
+### Context7
+- **URL**: https://mcp.context7.com/mcp
+- **Purpose**: Provides up-to-date, version-specific API documentation and code examples
+- **Usage**: Add "use context7" to prompts when you need current library documentation
+- **Benefits**: Prevents hallucinated APIs and outdated code examples
