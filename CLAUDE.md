@@ -51,6 +51,10 @@ knowledge:
 
   and directories
 
+- `@docs/context/nested-apps.md` - Complete guide for creating new nested apps
+
+  within the app/(app) structure
+
 - `@docs/context/coding-standards.md` - Rules for generating code, tests, or
 
   configs
@@ -87,7 +91,13 @@ ORM. The architecture follows a modern full-stack pattern with:
 
 ### Key Directories
 
-- **`app/(app)/`**: Main chat interface and API routes
+- **`app/(app)/`**: Main application shell with nested apps (chat, settings, help)
+
+  - Each child route is a separate nested app with its own layout using Main
+
+    container
+
+  - Navigation handled by app shell layout with automatic active state
 - **`app/(auth)/`**: Authentication pages and logic
 - **`artifacts/`**: Artifact handling for code, text, images, and sheets
 - **`components/`**: React components including UI primitives from shadcn/ui

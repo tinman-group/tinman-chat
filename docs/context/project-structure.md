@@ -88,14 +88,23 @@ tinman-chat/
 │   ├── favicon.ico                     # Favicon
 │   ├── opengraph-image.png             # Social media preview image
 │   ├── twitter-image.png               # Twitter preview image
-│   ├── (chat)/                         # Chat application routes
-│   │   ├── layout.tsx                  # Chat layout with sidebar
-│   │   ├── page.tsx                    # New chat page
-│   │   ├── actions.ts                  # Server actions for chat operations
-│   │   ├── chat/
+│   ├── (app)/                          # Main application shell
+│   │   ├── layout.tsx                  # App shell with navigation sidebar
+│   │   ├── opengraph-image.png         # App-specific social image
+│   │   ├── twitter-image.png           # App-specific Twitter image
+│   │   ├── actions.ts                  # Shared server actions
+│   │   ├── chat/                       # Chat nested app
+│   │   │   ├── layout.tsx              # Chat app layout (Main.Root container)
+│   │   │   ├── page.tsx                # New chat page
 │   │   │   └── [id]/
 │   │   │       └── page.tsx            # Individual chat page
-│   │   └── api/                        # API routes
+│   │   ├── settings/                   # Settings nested app (planned)
+│   │   │   ├── layout.tsx              # Settings layout (Main.Root container)
+│   │   │   └── page.tsx                # Settings page
+│   │   ├── help/                       # Help nested app (planned)
+│   │   │   ├── layout.tsx              # Help layout (Main.Root container)  
+│   │   │   └── page.tsx                # Help page
+│   │   └── api/                        # Shared API routes
 │   │       ├── chat/
 │   │       │   ├── route.ts            # Chat creation endpoint
 │   │       │   ├── schema.ts           # Chat request/response schemas
@@ -247,22 +256,56 @@ tinman-chat/
 
 ## Key Architecture Patterns
 
+### Nested App Architecture
+
+The application uses a nested app pattern where `app/(app)/` serves as the main application shell with individual nested apps for different functionality areas:
+
+- **App Shell**: `app/(app)/layout.tsx` provides the main navigation sidebar with route buttons
+- **Nested Apps**: Each top-level route (e.g., `/chat`, `/settings`, `/help`) is a separate nested app with its own layout
+- **Main Container**: Each nested app uses the `Main` container component system for consistent layout
+- **Navigation**: Navigation buttons in the app shell automatically highlight the active route
+
+#### Nested App Structure Pattern
+
+Each nested app follows this structure:
+
+```text
+app/(app)/{route}/
+├── layout.tsx              # App-specific layout using Main.Root
+├── page.tsx                # Main page for the app
+└── [optional-subroutes]/   # Additional nested routes
+    └── page.tsx
+```
+
+#### Example: Chat App
+
+The chat app at `app/(app)/chat/` demonstrates the pattern:
+
+- **Layout**: Uses `Main.Root` container with `AppSidebar` and `Main.Content`
+- **Authentication**: Checks session and redirects if needed
+- **State**: Provides `DataStreamProvider` for real-time features
+- **Content**: Renders chat interface within `Main.Content`
+
 ### Multi-tenancy Support
+
 - **Company-based isolation**: Users belong to companies with separate data contexts
 - **Role-based access**: Different permission levels within companies
 - **Rate limiting**: Separate limits for registered vs guest users
 
 ### Message Parts Architecture
+
 - **Flexible content**: Messages contain `parts` arrays supporting text, code, images
 - **Multimodal support**: Rich content types in conversations
 - **Migration strategy**: Gradual migration from deprecated Message to Message_v2
 
 ### Artifacts System
+
 - **Interactive documents**: Code, text, image, and sheet artifacts with live editing
 - **Versioning**: Document versions with suggestion system
 - **Type safety**: Zod schemas for all artifact operations
 
 ### AI Integration
+
 - **Provider abstraction**: Support for multiple AI providers through AI SDK
 - **Tool calling**: Structured function calling for document operations
 - **Resumable streams**: Long-running responses with Redis-backed resumption
