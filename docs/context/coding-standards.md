@@ -94,6 +94,29 @@ async function processChat(
 
 ## Next.js & React Patterns
 
+### React Import Standards (REQUIRED)
+
+- **Always import directly from React**: Use named imports like `import { useState } from 'react'`
+- **Never use React namespace**: Avoid `import React from 'react'` or `import * as React from 'react'`
+- **Direct hook usage**: Use `useState(...)` not `React.useState(...)`
+
+```typescript
+// Good - Direct imports
+import { useState, useEffect, useCallback } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
+
+// Bad - Namespace imports
+import * as React from 'react';
+import React from 'react';
+```
+
+### Component Generation Standards
+
+- **Always use shadcn/ui**: When creating new UI components, use shadcn/ui CLI whenever possible
+- **Use latest version**: Run `npx shadcn@latest add [component-name]` for new components
+- **Check existing components**: Before creating custom components, verify if shadcn/ui has a suitable option
+- **Follow shadcn patterns**: When extending shadcn components, maintain their composition patterns
+
 ### Component Structure
 
 ```typescript
