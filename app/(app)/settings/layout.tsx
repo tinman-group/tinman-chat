@@ -1,25 +1,17 @@
-import { SettingsSidebar } from "@/components/settings-sidebar";
+import { auth } from "@/app/(auth)/auth";
 import { Main } from "@/components/main-container";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { cookies } from "next/headers";
-import { auth } from "../../(auth)/auth";
+import { PropsWithChildren } from "react";
+import { SettingsSidebar } from "./sidebar";
 
 export const experimental_ppr = true;
 
-export default async function Layout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
-  const [session, cookieStore] = await Promise.all([auth(), cookies()]);
-  const isCollapsed = cookieStore.get("sidebar:state")?.value !== "true";
+export default async function Layout({ children }: PropsWithChildren) {
+  const session = await auth();
 
   return (
-    <SidebarProvider defaultOpen={!isCollapsed}>
-      <Main.Root>
-        <SettingsSidebar user={session?.user} />
-        <Main.Content>{children}</Main.Content>
-      </Main.Root>
-    </SidebarProvider>
+    <Main.Root>
+      <SettingsSidebar user={session?.user} />
+      <Main.Content>{children}</Main.Content>
+    </Main.Root>
   );
 }

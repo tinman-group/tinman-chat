@@ -1,16 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { HelpCircle, MessagesSquare, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PropsWithChildren, ReactNode } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 
 interface NavButtonProps {
   to: string;
   icon: ReactNode;
   className?: string;
 }
+
+export type NavSidebarProps = {
+  items?: NavButtonProps[];
+  footer?: NavButtonProps[];
+};
 
 const NavButton = ({ to, icon, className = "" }: NavButtonProps) => {
   const pathname = usePathname();
@@ -39,15 +43,16 @@ const NavGroup = ({ children, ...props }: PropsWithChildren) => (
   </div>
 );
 
-export function NavSidebar() {
+export const NavSidebar: FC<NavSidebarProps> = ({
+  items = [],
+  footer = []
+}) => {
   return (
     <aside className="flex h-full w-[48px] flex-col px-2">
       <NavGroup>
-        <NavButton
-          to="/chat"
-          icon={<MessagesSquare className="h-[18px] w-[18px]" />}
-          className="mb-1"
-        />
+        {items.map(({ to, icon }, idx) => (
+          <NavButton key={idx} to={to} icon={icon} className="mb-1" />
+        ))}
       </NavGroup>
 
       {/* Spacer to push bottom items down */}
@@ -55,16 +60,10 @@ export function NavSidebar() {
 
       {/* Bottom section with settings and help */}
       <NavGroup>
-        <NavButton
-          to="/settings"
-          icon={<Settings className="h-[18px] w-[18px]" />}
-          className="mb-1"
-        />
-        <NavButton
-          to="/help"
-          icon={<HelpCircle className="h-[18px] w-[18px]" />}
-        />
+        {footer.map(({ to, icon }, idx) => (
+          <NavButton key={idx} to={to} icon={icon} className="mb-1" />
+        ))}
       </NavGroup>
     </aside>
   );
-}
+};

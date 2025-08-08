@@ -1,37 +1,26 @@
 "use client";
 
 import { PlusIcon } from "@/components/icons";
-import { Main } from "@/components/main-container";
+import { MainSidebar } from "@/components/main-sidebar";
 import { SidebarHistory } from "@/components/sidebar-history";
 import { SidebarUserNav } from "@/components/sidebar-user-nav";
 import { Button } from "@/components/ui/button";
 import { SidebarContent, useSidebar } from "@/components/ui/sidebar";
-import { useResizable } from "@/hooks/use-resizable";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from "@/components/ui/tooltip";
 import type { User } from "next-auth";
 import { useRouter } from "next/navigation";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
-export function AppSidebar({ user }: { user: User | undefined }) {
+export function ChatSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
   const { setOpenMobile } = useSidebar();
 
-  const { width, startResizing, sidebarRef } = useResizable({
-    initialWidth: 280,
-    minWidth: 200,
-    maxWidth: 500
-  });
-
   return (
-    <Main.Sidebar
-      ref={sidebarRef}
-      collapsible="none"
-      width={width}
-      onResizeStart={startResizing}
-    >
-      <Main.SidebarHeader>
-        <h2 className="text-[13px] font-normal">Chat</h2>
-        <span className="flex-auto">&nbsp;</span>
-
+    <MainSidebar>
+      <MainSidebar.Header title="Chat">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -49,13 +38,13 @@ export function AppSidebar({ user }: { user: User | undefined }) {
           </TooltipTrigger>
           <TooltipContent align="end">New Chat</TooltipContent>
         </Tooltip>
-      </Main.SidebarHeader>
+      </MainSidebar.Header>
       <SidebarContent>
         <SidebarHistory user={user} />
       </SidebarContent>
-      <Main.SidebarFooter>
+      <MainSidebar.Footer>
         {user && <SidebarUserNav user={user} />}
-      </Main.SidebarFooter>
-    </Main.Sidebar>
+      </MainSidebar.Footer>
+    </MainSidebar>
   );
 }
