@@ -5,7 +5,6 @@ import { generateUUID } from "@/lib/utils";
 import { streamObject, tool, type UIMessageStreamWriter } from "ai";
 import type { Session } from "next-auth";
 import { z } from "zod";
-import { AISDKZodV4Adapter } from "@/lib/ai/zod-v4-adapter";
 import { myProvider } from "../providers";
 
 interface RequestSuggestionsProps {
@@ -13,26 +12,19 @@ interface RequestSuggestionsProps {
   dataStream: UIMessageStreamWriter<ChatMessage>;
 }
 
-// Create Zod v4 schema with enhanced validation
-const requestSuggestionsSchemaV4 = z.object({
-  documentId: z.string().min(1, { error: "Document ID is required" }).describe("The ID of the document to request edits")
+const requestSuggestionsSchema = z.object({
+  documentId: z.string().min(1, "Document ID is required").describe("The ID of the document to request edits")
 });
 
 export const requestSuggestions = ({
   session,
   dataStream
 }: RequestSuggestionsProps) => {
-  // Use compatibility adapter for AI SDK integration
-  const adapterSchema = AISDKZodV4Adapter.createStreamingToolSchema(
-    requestSuggestionsSchemaV4
-  );
-
   return tool({
     description: "Request suggestions for a document",
-    inputSchema: adapterSchema.aiSdkSchema,
+    inputSchema: requestSuggestionsSchema,
     execute: async (params) => {
-      // Validate with v4 for enhanced type safety
-      const { documentId } = adapterSchema.validate(params);
+      const { documentId } = requestSuggestionsSchema.parse(params);
       
       const document = await getDocumentById({ id: documentId });
 

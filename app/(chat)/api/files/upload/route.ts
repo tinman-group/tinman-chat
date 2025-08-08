@@ -8,13 +8,9 @@ import { auth } from '@/app/(auth)/auth';
 const FileSchema = z.object({
   file: z
     .instanceof(Blob)
-    .refine((file) => file.size <= 5 * 1024 * 1024, {
-      error: 'File size should be less than 5MB',
-    })
+    .refine((file) => file.size <= 5 * 1024 * 1024, 'File size should be less than 5MB')
     // Update the file type based on the kind of files you want to accept
-    .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), {
-      error: 'File type should be JPEG or PNG',
-    }),
+    .refine((file) => ['image/jpeg', 'image/png'].includes(file.type), 'File type should be JPEG or PNG'),
 });
 
 export async function POST(request: Request) {

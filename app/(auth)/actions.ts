@@ -7,8 +7,8 @@ import { createUser, getUser } from '@/lib/db/queries';
 import { signIn } from './auth';
 
 const authFormSchema = z.object({
-  email: z.email(),
-  password: z.string().min(6, { error: 'Password must be at least 6 characters' }),
+  email: z.string().email(),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 export interface LoginActionState {
