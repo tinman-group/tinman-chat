@@ -93,7 +93,7 @@ function PureMultimodalInput({
       adjustHeight();
     }
     // Only run once after hydration
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []);
 
   useEffect(() => {
