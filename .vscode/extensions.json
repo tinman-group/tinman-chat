@@ -1,3 +1,8 @@
 {
-  "recommendations": ["biomejs.biome", "jonathan-yeung.mark-sharp"]
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "jonathan-yeung.mark-sharp",
+    "amodio.toggle-excluded-files",
+    "dbaeumer.vscode-eslint"
+  ]
 }
