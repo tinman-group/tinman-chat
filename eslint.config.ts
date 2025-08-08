@@ -5,7 +5,7 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 import nextPlugin from "@next/eslint-plugin-next";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
-import tailwindcss from "eslint-plugin-tailwindcss";
+// import tailwindcss from "eslint-plugin-tailwindcss";
 import tseslint from "typescript-eslint";
 
 export default [
@@ -18,7 +18,7 @@ export default [
       "react-hooks": reactHooks,
       "jsx-a11y": jsxA11y,
       import: importPlugin,
-      tailwindcss,
+      // tailwindcss,
       "@next/next": nextPlugin
     },
     languageOptions: {
@@ -69,7 +69,8 @@ export default [
       ".next/**",
       "public/**",
       ".vercel/**",
-      "tailwind.config.ts"
+      "playwright-report/**",
+      "test-results/**"
     ]
   }
 ];

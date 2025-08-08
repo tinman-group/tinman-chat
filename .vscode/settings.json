@@ -32,5 +32,10 @@
 
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
+  },
+  "files.associations": {
+    "**/shared/tools/bin/*": "shellscript",
+    "**/*.css": "tailwindcss",
+    "**/*.mdc": "markdown"
   }
 }

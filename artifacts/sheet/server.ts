@@ -3,6 +3,17 @@ import { sheetPrompt, updateDocumentPrompt } from '@/lib/ai/prompts';
 import { createDocumentHandler } from '@/lib/artifacts/server';
 import { streamObject } from 'ai';
 import { z } from 'zod';
+import { AISDKZodV4Adapter } from '@/lib/ai/zod-v4-adapter';
+
+// Create Zod v4 schema with enhanced validation
+const sheetStreamingSchemaV4 = z.object({
+  csv: z.string().min(1, { error: 'CSV data is required' }).describe('CSV data'),
+});
+
+// Use compatibility adapter for AI SDK streaming
+const sheetAdapterSchema = AISDKZodV4Adapter.createStreamingToolSchema(
+  sheetStreamingSchemaV4
+);
 
 export const sheetDocumentHandler = createDocumentHandler<'sheet'>({
   kind: 'sheet',
@@ -13,9 +24,7 @@ export const sheetDocumentHandler = createDocumentHandler<'sheet'>({
       model: myProvider.languageModel('artifact-model'),
       system: sheetPrompt,
       prompt: title,
-      schema: z.object({
-        csv: z.string().describe('CSV data'),
-      }),
+      schema: sheetAdapterSchema.aiSdkSchema,
     });
 
     for await (const delta of fullStream) {
@@ -26,13 +35,16 @@ export const sheetDocumentHandler = createDocumentHandler<'sheet'>({
         const { csv } = object;
 
         if (csv) {
+          // Validate with v4 for enhanced type safety
+          const validatedObject = sheetAdapterSchema.validate({ csv });
+          
           dataStream.write({
             type: 'data-sheetDelta',
-            data: csv,
+            data: validatedObject.csv,
             transient: true,
           });
 
-          draftContent = csv;
+          draftContent = validatedObject.csv;
         }
       }
     }
@@ -52,9 +64,7 @@ export const sheetDocumentHandler = createDocumentHandler<'sheet'>({
       model: myProvider.languageModel('artifact-model'),
       system: updateDocumentPrompt(document.content, 'sheet'),
       prompt: description,
-      schema: z.object({
-        csv: z.string(),
-      }),
+      schema: sheetAdapterSchema.aiSdkSchema,
     });
 
     for await (const delta of fullStream) {
@@ -65,13 +75,16 @@ export const sheetDocumentHandler = createDocumentHandler<'sheet'>({
         const { csv } = object;
 
         if (csv) {
+          // Validate with v4 for enhanced type safety
+          const validatedObject = sheetAdapterSchema.validate({ csv });
+          
           dataStream.write({
             type: 'data-sheetDelta',
-            data: csv,
+            data: validatedObject.csv,
             transient: true,
           });
 
-          draftContent = csv;
+          draftContent = validatedObject.csv;
         }
       }
     }
