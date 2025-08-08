@@ -87,7 +87,7 @@ ORM. The architecture follows a modern full-stack pattern with:
 
 ### Key Directories
 
-- **`app/(chat)/`**: Main chat interface and API routes
+- **`app/(app)/`**: Main chat interface and API routes
 - **`app/(auth)/`**: Authentication pages and logic
 - **`artifacts/`**: Artifact handling for code, text, images, and sheets
 - **`components/`**: React components including UI primitives from shadcn/ui

@@ -384,15 +384,36 @@ export const createValidationSchema = () => {
 - **Always import directly from React**: Use named imports like `import { useState } from 'react'`
 - **Never use React namespace**: Avoid `import React from 'react'` or `import * as React from 'react'`
 - **Direct hook usage**: Use `useState(...)` not `React.useState(...)`
+- **Import FC and PropsWithChildren**: Always import these types for component declarations
+- **Use PropsWithChildren**: Instead of `{ children: ReactNode }`, use `PropsWithChildren<YourProps>`
 
 ```typescript
-// Good - Direct imports
+// Good - Direct imports with component types
 import { useState, useEffect, useCallback } from 'react';
-import type { ComponentProps, ReactNode } from 'react';
+import type { FC, ComponentProps, PropsWithChildren } from 'react';
+
+// Component with children - Good
+export const Layout: FC<PropsWithChildren<{ title: string }>> = ({ title, children }) => (
+  <div>
+    <h1>{title}</h1>
+    {children}
+  </div>
+);
+
+// Component without children - Good
+export const Button: FC<{ onClick: () => void }> = ({ onClick }) => (
+  <button onClick={onClick}>Click me</button>
+);
 
 // Bad - Namespace imports
 import * as React from 'react';
 import React from 'react';
+
+// Bad - Using ReactNode for children
+import type { ReactNode } from 'react';
+interface BadProps {
+  children: ReactNode; // Use PropsWithChildren instead
+}
 ```
 
 ### Component Generation Standards
@@ -402,12 +423,14 @@ import React from 'react';
 - **Check existing components**: Before creating custom components, verify if shadcn/ui has a suitable option
 - **Follow shadcn patterns**: When extending shadcn components, maintain their composition patterns
 
-### Component Structure
+### Component Structure (REQUIRED)
+
+**Always use arrow function expressions with explicit type annotations for functional components:**
 
 ```typescript
 'use client'; // Only when using client-side features
 
-import type { ComponentProps } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { useState, useEffect } from 'react';
 import type { Session } from 'next-auth';
 
@@ -418,13 +441,64 @@ interface ChatProps {
   isReadonly?: boolean;
 }
 
-export function Chat({
+// Good - Arrow function with FC type annotation
+export const Chat: FC<ChatProps> = ({
   id,
   initialMessages,
   session,
   isReadonly = false,
-}: ChatProps) {
+}) => {
   // Component implementation
+  return <div>...</div>;
+};
+
+// Good - Async component with explicit type
+export const AsyncChat: FC<ChatProps> = async ({
+  id,
+  initialMessages,
+  session,
+  isReadonly = false,
+}) => {
+  // Server component implementation
+  const data = await fetchData();
+  return <div>...</div>;
+};
+
+// Good - Component with children using PropsWithChildren
+interface LayoutProps {
+  title: string;
+  className?: string;
+}
+
+export const Layout: FC<PropsWithChildren<LayoutProps>> = ({
+  title,
+  className,
+  children,
+}) => {
+  return (
+    <div className={className}>
+      <h1>{title}</h1>
+      {children}
+    </div>
+  );
+};
+
+// Good - Default export with arrow function
+const HomePage: FC = () => {
+  return <div>Home Page</div>;
+};
+
+export default HomePage;
+
+// Bad - Function declaration style (avoid)
+export function Chat(props: ChatProps) {
+  // Don't use this pattern
+}
+
+// Bad - Using ReactNode for children (avoid)
+interface BadLayoutProps {
+  title: string;
+  children: ReactNode; // Use PropsWithChildren<> instead
 }
 ```
 
