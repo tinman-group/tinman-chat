@@ -12,7 +12,7 @@
   "workbench.editor.highlightModifiedTabs": true,
   "editor.rulers": [80],
   "editor.wrappingIndent": "indent",
-    "files.exclude": {
+  "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
     "**/.hg": true,
@@ -25,7 +25,9 @@
     "**/.vite": true,
     "**/.wrangler": true,
     "**/dist": true,
-    "**/.turbo": true
+    "**/.turbo": true,
+    "**/.next": true,
+    "**/.vercel": true
   },
 
   "editor.codeActionsOnSave": {
