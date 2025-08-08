@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Development**: `pnpm dev` - Starts Next.js development server with Turbo
 - **Build**: `pnpm build` - Runs database migrations and builds the application
-- **Linting**: `pnpm lint` - Runs Next.js ESLint and Biome linter with auto-fix
-- **Formatting**: `pnpm format` - Formats code with Biome
+- **Linting**: `pnpm lint` - Runs ESLint with auto-fix
+- **Formatting**: `pnpm format` - Formats code with Prettier
 - **Testing**: `pnpm test` - Runs Playwright e2e tests
 
 ## Database Commands
