@@ -1,11 +1,10 @@
 "use client";
 
-import Script from "next/script";
-
 import { Button } from "@/components/ui/button";
 import { HelpCircle, MessagesSquare, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Script from "next/script";
 import { PropsWithChildren, ReactNode } from "react";
 
 interface NavButtonProps {
