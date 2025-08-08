@@ -31,10 +31,12 @@ yarn-error.log*
 
 # turbo
 .turbo
-
+.temp
 .env
 .vercel
 .env*.local
+dist
+.branches
 
 # Playwright
 /test-results/
