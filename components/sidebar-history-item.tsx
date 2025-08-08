@@ -1,10 +1,15 @@
-import type { Chat } from '@/lib/db/schema';
+import { useChatVisibility } from "@/hooks/use-chat-visibility";
+import type { Chat } from "@/lib/db/schema";
+import Link from "next/link";
+import { memo } from "react";
 import {
-  SidebarMenuAction,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from './ui/sidebar';
-import Link from 'next/link';
+  CheckCircleFillIcon,
+  GlobeIcon,
+  LockIcon,
+  MoreHorizontalIcon,
+  ShareIcon,
+  TrashIcon
+} from "./icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,24 +18,19 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+  DropdownMenuTrigger
+} from "./ui/dropdown-menu";
 import {
-  CheckCircleFillIcon,
-  GlobeIcon,
-  LockIcon,
-  MoreHorizontalIcon,
-  ShareIcon,
-  TrashIcon,
-} from './icons';
-import { memo } from 'react';
-import { useChatVisibility } from '@/hooks/use-chat-visibility';
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem
+} from "./ui/sidebar";
 
 const PureChatItem = ({
   chat,
   isActive,
   onDelete,
-  setOpenMobile,
+  setOpenMobile
 }: {
   chat: Chat;
   isActive: boolean;
@@ -39,15 +39,13 @@ const PureChatItem = ({
 }) => {
   const { visibilityType, setVisibilityType } = useChatVisibility({
     chatId: chat.id,
-    initialVisibilityType: chat.visibility,
+    initialVisibilityType: chat.visibility
   });
 
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={isActive}>
-        <Link href={`/chat/${chat.id}`} onClick={() => setOpenMobile(false)}>
-          <span>{chat.title}</span>
-        </Link>
+        <Link href={`/chat/${chat.id}`}>{chat.title}</Link>
       </SidebarMenuButton>
 
       <DropdownMenu modal={true}>
@@ -63,44 +61,38 @@ const PureChatItem = ({
 
         <DropdownMenuContent side="bottom" align="end">
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="cursor-pointer">
+            <DropdownMenuSubTrigger>
               <ShareIcon />
               <span>Share</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem
-                  className="cursor-pointer flex-row justify-between"
                   onClick={() => {
-                    setVisibilityType('private');
+                    setVisibilityType("private");
                   }}
                 >
-                  <div className="flex flex-row gap-2 items-center">
-                    <LockIcon size={12} />
-                    <span>Private</span>
-                  </div>
-                  {visibilityType === 'private' ? (
+                  <LockIcon size={12} />
+                  <span className="flex-1">Private</span>
+                  {visibilityType === "private" ? (
                     <CheckCircleFillIcon />
                   ) : null}
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="cursor-pointer flex-row justify-between"
                   onClick={() => {
-                    setVisibilityType('public');
+                    setVisibilityType("public");
                   }}
                 >
-                  <div className="flex flex-row gap-2 items-center">
-                    <GlobeIcon />
-                    <span>Public</span>
-                  </div>
-                  {visibilityType === 'public' ? <CheckCircleFillIcon /> : null}
+                  <GlobeIcon />
+                  <span className="flex-1">Public</span>
+                  {visibilityType === "public" ? <CheckCircleFillIcon /> : null}
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
 
           <DropdownMenuItem
-            className="cursor-pointer text-destructive focus:bg-destructive/15 focus:text-destructive dark:text-red-500"
+            className="text-destructive focus:bg-destructive/15 focus:text-destructive cursor-pointer dark:text-red-500"
             onSelect={() => onDelete(chat.id)}
           >
             <TrashIcon />
